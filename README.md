@@ -13,6 +13,10 @@ then `gcloud init`
 yarn deploy
 ```
 
+## Exec
+
+Open [https://europe-west1-esm-testing-225416.cloudfunctions.net/esm-log](https://europe-west1-esm-testing-225416.cloudfunctions.net/esm-log)
+
 ## Logs
 
 ```bash
