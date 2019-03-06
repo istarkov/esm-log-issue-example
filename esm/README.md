@@ -58,14 +58,13 @@ ESM of [tomorrow](https://github.com/nodejs/modules).
 
 Out of the box `esm` just works, no configuration necessary, and supports:
 
+* Passing all applicable [test262](https://github.com/tc39/test262) compliance tests
 * [`import`](https://ponyfoo.com/articles/es6-modules-in-depth#import)/[`export`](https://ponyfoo.com/articles/es6-modules-in-depth#export)
 * [`import.meta`](https://github.com/tc39/proposal-import-meta)
 * [Dynamic `import`](https://github.com/tc39/proposal-dynamic-import)
-* [Improved errors](https://github.com/standard-things/esm/wiki/improved-errors)
 * [Live bindings](https://ponyfoo.com/articles/es6-modules-in-depth#bindings-not-values)
-* [Loading `.mjs` files as ESM](https://github.com/nodejs/node-eps/blob/master/002-es-modules.md#32-determining-if-source-is-an-es-module)
-* [The file URI scheme](https://en.wikipedia.org/wiki/File_URI_scheme)
-* Node [`--eval`](https://nodejs.org/api/cli.html#cli_e_eval_script) and [`--print`](https://nodejs.org/api/cli.html#cli_p_print_script) flags
+* [File URI scheme](https://en.wikipedia.org/wiki/File_URI_scheme)
+* Node `stdin`, [`--eval`](https://nodejs.org/api/cli.html#cli_e_eval_script), [`--print`](https://nodejs.org/api/cli.html#cli_p_print_script) flags
 * Node [`--check`](https://nodejs.org/api/cli.html#cli_c_check) flag _(Node 10+)_
 
 Options
@@ -73,29 +72,33 @@ Options
 
 Specify options with one of the following:
 
-* The `"esm"` field in `package.json`
+* `"esm"` field in `package.json`
 * CJS/ESM in an `.esmrc.js` or `.esmrc.mjs` file
 * [JSON6](https://github.com/d3x0r/json6) in an `.esmrc` or `.esmrc.json` file
 * JSON6 or file path in the `ESM_OPTIONS` environment variable
-* The `ESM_DISABLE_CACHE` environment variable
+* `ESM_DISABLE_CACHE` environment variable
 
-<table><tr><td colspan=2><code>{</code><tr><td valign=top><code>"await":</code><td><p>A boolean for top-level <a href=https://node.green/#ES2017-features-async-functions-await><code>await</code></a> in modules <a href=https://github.com/mylesborins/proposal-top-level-await/#optional-constraint-top-level-await-can-only-be-used-in-modules-without-exports>without ESM exports</a>.<tr><td valign=top><code>"cjs":</code><td><p>A boolean or object for toggling CJS features in ESM.<details><summary>Features</summary><table><tr><td colspan=2><code>{</code><tr><td valign=top><code>"cache":</code><td><p>A boolean for storing ES modules in <code>require.cache</code>.<tr><td valign=top><code>"extensions":</code><td><p>A boolean for respecting <code>require.extensions</code> in ESM.<tr><td valign=top><code>"interop":</code><td><p>A boolean for <code>__esModule</code> interoperability.<tr><td valign=top><code>"mutableNamespace":</code><td><p>A boolean for mutable <a href=https://ponyfoo.com/articles/es6-modules-in-depth#import-all-the-things>namespace objects</a>.<tr><td valign=top><code>"namedExports":</code><td><p>A boolean for <a href=https://ponyfoo.com/articles/es6-modules-in-depth#importing-named-exports>importing named exports</a> of CJS modules.<tr><td valign=top><code>"paths":</code><td><p>A boolean for following CJS <a href=https://github.com/nodejs/node-eps/blob/master/002-es-modules.md#432-removal-of-non-local-dependencies>path rules</a> in ESM.<tr><td valign=top><code>"vars":</code><td><p>A boolean for <code>__dirname</code>, <code>__filename</code>, and <code>require</code> in ESM.<tr><td colspan=2><code>}</code></table></details><tr><td valign=top><code>"force":</code><td><p>A boolean to apply these options to all module loads.<tr><td valign=top><code>"mainFields":</code><td><p>An array of fields, e.g. <code>["main"]</code>, checked when importing a package.<tr><td valign=top><code>"mode":</code><td><p>A string mode:<ul><li><code>"auto"</code> detect files with <code>import</code>, <code>import.meta</code>, <code>export</code>,<br><a href=https://github.com/tc39/proposal-modules-pragma><code>"use module"</code></a>, or <code>.mjs</code> as ESM<li><code>"all"</code> script files are treated as ESM<li><code>"strict"</code> to treat <strong>only</strong> <code>.mjs</code> files as ESM</ul><tr><td colspan=2><code>}</code></table>
+<table><tr><td colspan=2><code>{</code><tr><td valign=top><code>"cjs":true</code><td><p>A boolean or object for toggling CJS features in ESM.<details><summary>Features</summary><table><tr><td colspan=2><code>{</code><tr><td valign=top><code>"cache":true</code><td><p>A boolean for storing ES modules in <code>require.cache</code>.<tr><td valign=top><code>"esModule":true</code><td><p>A boolean for <code>__esModule</code> interoperability.<tr><td valign=top><code>"extensions":true</code><td><p>A boolean for respecting <code>require.extensions</code> in ESM.<tr><td valign=top><code>"mutableNamespace":true</code><td><p>A boolean for mutable <a href=https://ponyfoo.com/articles/es6-modules-in-depth#import-all-the-things>namespace objects</a>.<tr><td valign=top><code>"namedExports":true</code><td><p>A boolean for <a href=https://ponyfoo.com/articles/es6-modules-in-depth#importing-named-exports>importing named exports</a> of CJS modules.<tr><td valign=top><code>"paths":true</code><td><p>A boolean for following CJS <a href=https://github.com/nodejs/node-eps/blob/master/002-es-modules.md#432-removal-of-non-local-dependencies>path rules</a> in ESM.<tr><td valign=top><code>"vars":true</code><td><p>A boolean for <code>__dirname</code>, <code>__filename</code>, and <code>require</code> in ESM.<tr><td valign=top><code>"dedefault":false</code><td><p>A boolean for requiring ES modules without the dangling <code>require().default</code>.<tr><td valign=top><code>"topLevelReturn":false</code><td><p>A boolean for top-level <code>return</code> support.<tr><td colspan=2><code>}</code></table></details><tr><td valign=top><code>"mainFields":["main"]</code><td><p>An array of fields checked when importing a package.<tr><td valign=top><code>"mode":"auto"</code><td><p>A string mode:<ul><li><code>"auto"</code> detect files with <code>import</code>, <code>import.meta</code>, <code>export</code>,<br><a href=https://github.com/tc39/proposal-modules-pragma><code>"use module"</code></a>, or <code>.mjs</code> as ESM.<li><code>"all"</code> files besides those with <code>"use script"</code> or <code>.cjs</code> are treated as ESM.<li><code>"strict"</code> to treat <strong>only</strong> <code>.mjs</code> files as ESM.</ul><tr><td valign=top><code>"await":false</code><td><p>A boolean for <a href=https://github.com/tc39/proposal-top-level-await>top-level <code>await</code></a> in modules without ESM exports. <em>(Node 10+)</em><tr><td valign=top><code>"force":false</code><td><p>A boolean to apply these options to all module loads.<tr><td valign=top><code>"wasm":false</code><td><p>A boolean for <a href=https://nodejs.org/api/globals.html#globals_webassembly>WebAssembly</a> module support. <em>(Node 8+)</em><tr><td colspan=2><code>}</code></table>
 
 DevOpts
 ---
 
-<table><tr><td colspan=2><code>{</code><tr><td valign=top><code>"cache":</code><td><p>A boolean for toggling cache creation or cache directory path.<tr><td valign=top><code>"sourceMap":</code><td><p>A boolean for including inline source maps.<tr><td colspan=2><code>}</code></table>
+<table><tr><td colspan=2><code>{</code><tr><td valign=top><code>"cache":true</code><td><p>A boolean for toggling cache creation or cache directory path.<tr><td valign=top><code>"sourceMap":false</code><td><p>A boolean for including inline source maps.<tr><td colspan=2><code>}</code></table>
 
 Tips
 ---
 
 ### Bundling
 
-* Add a “module” field to `package.json` with the path to the main ES module.
+* For bundlers like [`browserify`](http://browserify.org/)+[`esmify`](https://github.com/mattdesl/esmify),
+  [`parcel-bundler`](https://parceljs.org/), and [`webpack`](https://webpack.js.org/)
+  add a `"module"` field to `package.json` pointing to the main ES module.
+  ```json
+  "main": "index.js",
+  "module": "main.js"
+  ```
 
   :bulb: This is automagically done with `npm init esm` or `yarn create esm`.
-
-* Use [`esmify`](https://github.com/mattdesl/esmify) with [`browserify`](http://browserify.org/).
 
 ### Extensions
 
@@ -104,18 +107,22 @@ Tips
 
 ### Loading
 
-* The [`jasmine`](https://jasmine.github.io/) test runner does not have a
-  mechanism to load `esm`. However, `esm` can load a bootstrap file that
-  programmaticly runs tests following their
-  [library usage example](https://jasmine.github.io/setup/nodejs.html#a-simple-example-using-the-library).
-
 * Load `esm` before loaders/monitors like
   [`@babel/register`](https://babeljs.io/docs/en/next/babel-register.html),
   [`newrelic`](https://github.com/newrelic/node-newrelic),
   [`sqreen`](https://docs.sqreen.io/sqreen-for-nodejs/getting-started-2/), and
   [`ts-node`](https://github.com/TypeStrong/ts-node#programmatic).
 
-* Load `esm` with the “node-args” options of<br>
+* Load `esm` for [`jasmine`](https://jasmine.github.io/) using the
+  [`"helpers"`](https://jasmine.github.io/setup/nodejs.html#configuration)
+  field in `jasmine.json`:
+  ```json
+  "helpers": [
+    "node_modules/esm"
+  ]
+  ```
+
+* Load `esm` with “node-args" options of:<br>
   - [`node-tap`](https://www.node-tap.org/cli/): `--node-arg=-r --node-arg=esm`
   - [`pm2`](https://pm2.io/doc/en/runtime/reference/pm2-cli/#pm2-flags): `--node-args="-r esm"`
 
@@ -128,6 +135,5 @@ Tips
   [`tape`](https://github.com/substack/tape#preloading-modules), and
   [`webpack`](https://webpack.js.org/api/cli/#config-options).
 
-  :bulb: By Node’s rules, builtin `require` cannot sideload `.mjs` files.
-  However, with `esm`, ES modules can be sideloaded as `.js` files or `.mjs`
-  files may be loaded with dynamic `import`.
+  :bulb: Builtin `require` cannot sideload `.mjs` files. However, `.js` files
+  can be sideloaded or `.mjs` files may be loaded with dynamic `import`.

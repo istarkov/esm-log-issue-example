@@ -1,10 +1,18 @@
-import express from 'express';
+// THIS IMPORT BREAKS log of 2,3
+import { parse } from 'url';
 
-const app = express();
+export const routes = (req, res) => {
+  // log 1
+  console.log('HELLO');
 
-app.use('/', async (req, res) => {
-  console.log('console log in module wrapped with esm');
-  res.send('hello');
-});
+  // log 2
+  console.log({ a: 1 });
 
-export const routes = app;
+  // log 3
+  console.log(JSON.stringify({ a: 1 }, null, ' '));
+
+  // log 4
+  console.log([1]);
+
+  res.end('Im working');
+};

@@ -2,14 +2,12 @@
   "name": "realadvisor",
   "version": "0.0.1",
   "private": true,
-  "dependencies": {
-    "express": "^4.16.4"
-  },
+  "dependencies": {},
   "engines": {
     "node": "8"
   },
   "scripts": {
-    "deploy": "gcloud beta functions deploy esm-log --entry-point=app --region=europe-west1 --runtime=nodejs8 --trigger-http --project=esm-testing-225416",
-    "logs": "gcloud functions logs read esm-log --project=esm-testing-225416 --region=europe-west1"
+    "deploy": "gcloud functions deploy esm-log --entry-point=app --region=europe-west1 --runtime=nodejs8 --memory=256MB --trigger-http --project=esm-test-233714",
+    "logs": "gcloud functions logs read esm-log --project=esm-test-233714 --region=europe-west1"
   }
 }

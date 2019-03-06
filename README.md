@@ -1,5 +1,8 @@
 # ESM cloud function log issue
 
+Import inside [./routes.js](./routes.js) file caused that some console.log commands stopped to output
+data at gcloud functions. Like `console.log(Object)`, `console.log(Array)`, `console.log(JSON.stringify(Object, null, ' ' ))` etc
+
 ## Preinstall step
 
 You need to have [Google Cloud SDK](https://cloud.google.com/sdk/install) istalled
@@ -15,7 +18,7 @@ yarn deploy
 
 ## Exec
 
-Open [https://europe-west1-esm-testing-225416.cloudfunctions.net/esm-log](https://europe-west1-esm-testing-225416.cloudfunctions.net/esm-log)
+Open [https://europe-west1-esm-test-233714.cloudfunctions.net/esm-log](https://europe-west1-esm-test-233714.cloudfunctions.net/esm-log)
 
 ## Logs
 
@@ -36,15 +39,19 @@ Now in logs is
 
 ```
 Function execution started
-111 a non esm hello
-Function execution took 71 ms, finished with status code: 304
+HELLO
+Function execution took 40 ms, finished with status code: 200
 ```
 
 Must be
 
 ```
 Function execution started
-111 a non esm hello
-console log in module wrapped with esm
-Function execution took 71 ms, finished with status code: 304
+HELLO
+{ a: 1 }
+{
+ "a": 1
+}
+[ 1 ]
+Function execution took 15 ms, finished with status code: 200
 ```
