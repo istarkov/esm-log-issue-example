@@ -4,7 +4,7 @@ import { parse } from 'url';
 
 export const routes = (req, res) => {
   // log 1 - works always
-  console.log('HELLO');
+  console.log('HELLO2');
 
   // log 2 - works only if there is no imports in this file
   console.log({ a: 1 });

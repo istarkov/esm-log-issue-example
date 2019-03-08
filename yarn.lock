@@ -2,3 +2,6 @@
 # yarn lockfile v1
 
 
+esm@^3.2.12:
+  version "3.2.12"
+  resolved "https://registry.yarnpkg.com/esm/-/esm-3.2.12.tgz#0744c6fd97ba7150386fda9e834de9df1d52603b"
